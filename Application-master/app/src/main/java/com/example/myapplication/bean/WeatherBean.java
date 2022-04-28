@@ -2693,7 +2693,9 @@ public class WeatherBean {
             private String update_time;
             private String weather;
             private String weather_code;
+
             private String weather_short;
+
             private String wind_direction;
             private String wind_power;
 

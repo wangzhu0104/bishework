@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/shop_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#F5F5F5">
+
+        <ImageView
+            android:id="@+id/shop_iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:id="@+id/shop_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="购买留言次数"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Relative_2"
+        android:layout_below="@id/shop_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="661dp">
+
+        <ImageView
+            android:id="@+id/shop_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dcdcdc" />
+
+        <TextView
+            android:id="@+id/shop_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="您的剩余留言次数为："
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginTop="50dp"/>
+
+        <TextView
+            android:layout_below="@id/shop_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请选择您需要充值的金额："
+            android:textSize="25dp"
+            android:gravity="center"
+            android:layout_marginTop="50dp"/>
+
+        <LinearLayout
+            android:id="@+id/shop_price"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/shop_item_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/rg1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb1"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:background="#dcdcdc"
+                        android:text="1元"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+
+                    <RadioButton
+                        android:id="@+id/rb2"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:background="#dcdcdc"
+                        android:text="5元"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/rg2"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb3"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:background="#dcdcdc"
+                        android:text="10元"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+
+                    <RadioButton
+                        android:id="@+id/rb4"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:background="#dcdcdc"
+                        android:text="20元"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/shop_text"
+            android:layout_below="@id/shop_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/price_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1元等于2次，5元等于10次，10元等于20次，20元等于50次！"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="理性娱乐，适度消费"
+                android:layout_above="@+id/button5"/>
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_normal"
+                android:gravity="center"
+                android:text="充值"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

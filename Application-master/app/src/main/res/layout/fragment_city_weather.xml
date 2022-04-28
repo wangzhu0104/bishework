@@ -10,6 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +25,7 @@
             <TextView
                 android:id="@+id/frag_tv_city"
                 style="@style/todaytext"
-                android:text="广东省 深圳"
+                android:text="湖北省 武汉"
                 android:layout_below="@id/frag_tv_currenttemp"/>
             <TextView
                 android:id="@+id/frag_tv_condition"
@@ -33,7 +34,7 @@
                 android:layout_below="@id/frag_tv_city"/>
             <TextView
                 android:id="@+id/frag_tv_date"
-                android:text="2019-11-05"
+                android:text="2022-04-05"
                 android:layout_below="@id/frag_tv_condition"
                 android:layout_marginTop="10dp"
                 style="@style/todaytext" />
@@ -91,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/frag_bg"
+            android:background="@drawable/goodbg"
             android:layout_margin="10dp"
             android:padding="10dp">
             <LinearLayout
@@ -155,5 +156,6 @@
                     android:drawableBottom="@mipmap/icon_umbrella"/>
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

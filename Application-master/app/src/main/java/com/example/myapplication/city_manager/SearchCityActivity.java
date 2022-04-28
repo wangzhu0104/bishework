@@ -11,7 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.myapplication.MainActivity;
+import com.example.myapplication.activity.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.WeatherBean;
@@ -21,7 +21,7 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
     EditText searchEt;
     ImageView submitIv;
     GridView searchGv;
-    String[]hotCitys = {"北京","上海","广州","深圳","珠海","佛山","南京","苏州","厦门",
+    String[]hotCitys = {"北京","上海","武汉","广州","深圳","珠海","佛山","南京","苏州","厦门",
     "长沙","成都","福州","杭州","武汉","青岛","西安","太原","沈阳","重庆","天津","南宁"};
     private ArrayAdapter<String> adapter;
     String url1 = "https://wis.qq.com/weather/common?source=pc&weather_type=observe|index|rise|alarm|air|tips|forecast_24h&province=";

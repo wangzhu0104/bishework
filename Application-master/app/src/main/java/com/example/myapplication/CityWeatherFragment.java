@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.example.myapplication.activity.ChatActivity;
 import com.example.myapplication.base.BaseFragment;
 import com.example.myapplication.bean.WeatherBean;
 import com.example.myapplication.db.DBManager;
@@ -21,13 +24,16 @@ import java.text.SimpleDateFormat;
 import androidx.fragment.app.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.myapplication.activity.LoginActivity.usertel;
+import static com.example.myapplication.activity.MainActivity.alluser;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CityWeatherFragment extends BaseFragment implements View.OnClickListener{
-    TextView tempTv,cityTv,conditionTv,windTv,tempRangeTv,dateTv,clothIndexTv,carIndexTv,coldIndexTv,sportIndexTv,raysIndexTv,tipTv,umbrellaTv;
+    TextView tempTv,cityTv,conditionTv,windTv,tempRangeTv,dateTv,clothIndexTv,
+            carIndexTv,coldIndexTv,sportIndexTv,raysIndexTv,tipTv,umbrellaTv;
     ImageView dayIv;
     LinearLayout futureLayout;
     ScrollView outLayout;
@@ -116,14 +122,46 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         index = resultsBean.getIndex();
 //        设置TextView
         cityTv.setText(city);
-        tipTv.setText(resultsBean.getTips().getObserve().get_$0());
+        tipTv.setText("你好，" + alluser.getNowUser(usertel).getName() + "~" + "\n" + resultsBean.getTips().getObserve().get_$0());
 //        获取今日天气情况
         WeatherBean.DataBean.ObserveBean todayDataBean = resultsBean.getObserve();
+
         String time = changeTime(todayDataBean.getUpdate_time());
         dateTv.setText("发布时间  "+time);
         windTv.setText("湿度 "+todayDataBean.getHumidity()+"%");
         tempRangeTv.setText("气压  "+todayDataBean.getPressure()+"hPa");
+
         conditionTv.setText(todayDataBean.getWeather_short());
+        switch (todayDataBean.getWeather_short()) {
+            case "晴":
+                dayIv.setImageResource(R.mipmap.qing);
+                break;
+            case "阴":
+                dayIv.setImageResource(R.mipmap.yin);
+                break;
+            case "小雨":
+                dayIv.setImageResource(R.mipmap.xiaoyu);
+                break;
+            case "中雨":
+                dayIv.setImageResource(R.mipmap.zhongyu);
+                break;
+            case "大雨":
+                dayIv.setImageResource(R.mipmap.dayu);
+                break;
+            case "多云":
+                dayIv.setImageResource(R.mipmap.duoyun);
+                break;
+            case "霾":
+                dayIv.setImageResource(R.mipmap.mai);
+                break;
+            case "雾":
+                dayIv.setImageResource(R.mipmap.wu);
+                break;
+        }
+
+        //System.out.println(todayDataBean.getWeather_short());
+        //changePic(todayDataBean.getWeather_short().toString());
+
 //        获取实时天气温度情况，需要处理字符串
         tempTv.setText(todayDataBean.getDegree()+"°C");
 //        获取未来三天的天气情况，加载到layout当中
@@ -169,7 +207,7 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
 
     }
 
-//    时间格式化
+    //    时间格式化
     private String changeTime(String update_time) throws ParseException {
         SimpleDateFormat sf1 = new SimpleDateFormat("yyyyMMddHHmm");
         SimpleDateFormat sf2 =new SimpleDateFormat("yyyy-MM-dd HH:mm");

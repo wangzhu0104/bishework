@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,18 +12,34 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.myapplication.AllUser;
+import com.example.myapplication.CityFragmentPagerAdapter;
+import com.example.myapplication.CityWeatherFragment;
+import com.example.myapplication.R;
+import com.example.myapplication.RequestData;
+import com.example.myapplication.User;
 import com.example.myapplication.city_manager.CityManagerActivity;
 import com.example.myapplication.db.DBManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.myapplication.activity.LoginActivity.usertel;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView addCityIv,moreIv;
     LinearLayout pointLayout;
     RelativeLayout outLayout;
     ViewPager mainVp;
+    TextView chatTv;
+
     //    ViewPager的数据源
     List<Fragment>fragmentList;
     //    表示需要显示的城市的集合
@@ -33,9 +49,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CityFragmentPagerAdapter adapter;
     private SharedPreferences pref;
     private int bgNum;
+    public static AllUser alluser;
+
+    public static boolean  weather = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (weather) {
+            Intent loginaintent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(loginaintent);
+            MainActivity.this.finish();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addCityIv = findViewById(R.id.main_iv_add);
@@ -44,7 +69,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         outLayout = findViewById(R.id.main_out_layout);
         exchangeBg();
         mainVp = findViewById(R.id.main_vp);
+        chatTv = findViewById(R.id.frag_chat);
 //        添加点击事件
+        InitView();
+
+        chatTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InitView();
+                Intent chatintent = new Intent(MainActivity.this, ChatActivity.class);
+                startActivity(chatintent);
+            }
+        });
+
         addCityIv.setOnClickListener(this);
         moreIv.setOnClickListener(this);
 
@@ -69,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cityList.add(city);
             }
         }catch (Exception e){
-            Log.i("animee","程序出现问题了！！");
+            Log.i("王著","程序出现问题了！！");
         }
 //        初始化ViewPager页面的方法
         initPager();
@@ -81,6 +118,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainVp.setCurrentItem(fragmentList.size()-1);
 //        设置ViewPager页面监听
         setPagerListener();
+
+        moreIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InitView();
+                Intent postintent = new Intent(MainActivity.this,MoreActivity.class);
+                startActivity(postintent);
+            }
+        });
+
+    }
+
+    public void InitView() {
+        //2user开始了
+        RequestData requestData2;
+        RequestData.myCallback myCallback2 = new RequestData.myCallback(){
+            @Override
+            public void onSuccess(String response2) {
+                Log.e("user",response2);
+                try {
+                    JSONArray jsonArray = new JSONArray(response2);
+                    Log.e("jsarryuuuuuuuser", String.valueOf(jsonArray));
+                    //JSONObject jsonObject = new JSONObject(response);
+                    alluser = new AllUser();
+                    alluser.myAllUser.clear();
+                    int m = jsonArray.length();
+                    for (int i = 0;i < jsonArray.length();i++){
+                        JSONObject jsonObject1 = (JSONObject)jsonArray.get(i);
+
+                        String Password = jsonObject1.getString("PASSWORD");
+                        String Name = jsonObject1.getString("NAME");
+
+
+                        int TEL = jsonObject1.getInt("TEL");
+                        int Number = jsonObject1.getInt("NUMBER");
+                        int zddl = jsonObject1.getInt("ZDDL");
+                        boolean b = (zddl != 0);
+                        int jzmm = jsonObject1.getInt("JZMM");
+                        boolean c = (jzmm != 0);
+                        Log.e("\n循环2搞出：","\n"+"\n"+Password+"\n"+Name+"\n"+TEL+"\n"+zddl+"\n"+jzmm+"\n");
+
+                        innalluser(Password,Name,Number,TEL,b,c);
+                    }
+                    Log.e("json","王铁柱");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            public void innalluser( String Password, String Name,int Number,
+                                    int TEL,boolean zddl,boolean jzmm){
+                alluser.myAllUser.add(new User(Password,Name,Number,TEL,zddl,jzmm));
+            }
+            @Override
+            public void onFail(IOException e) {
+
+            }
+        };
+
+        requestData2 = new RequestData(myCallback2);
+        requestData2.setUrl("http://124.220.159.4/query.php");
+        List<String> key2 = new ArrayList<>();
+        key2.add("tbName");
+        List<String> param2 = new ArrayList<>();
+        param2.add("user");
+        //requestData.get();
+        requestData2.post(key2,param2);
+        if (alluser == null)
+            alluser = new AllUser();
     }
 
 
@@ -152,9 +257,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_iv_add:
                 intent.setClass(this, CityManagerActivity.class);
                 break;
-            case R.id.main_iv_more:
+            /*case R.id.main_iv_more:
                 intent.setClass(this,MoreActivity.class);
-                break;
+                break;*/
         }
         startActivity(intent);
     }
